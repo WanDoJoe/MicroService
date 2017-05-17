@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8" />
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+header("Access-Control-Allow-Origin:*")
+
+<title>JS简单模拟HTTP请求 - 琼台博客</title>
+<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="json2.js"></script>
+
+</head>
+<body>
+	<p onload="timedGetText('http://localhost:8080/MobileServce/login')"> </p>
+	<div id="msg2"></div>
+	<button onclick="get()">GET请求</button>
+	<button onclick="post()">POST请求</button>
+	<!-- URL:http://localhost:8080/MobileServce/login 接口 【琼台博客】-->
+</body>
+</html>
+<script type="text/javascript">
+function initHtml(htmlStr){
+//绘制页面
+var html=document.getElementById("msg2").innerHTML=htmlStr;
+
+//alert(html);
+}
+
+var url='http://192.168.199.151:8080/MobileServce/login';
+function post(){
+	//$.post(url,function(data,status){
+	//	alert(data);
+	
+	//});
+	$.ajax({  
+             type: "post",  
+             url: url,  
+             cache: false,  
+             error: function () { },  
+            data:{pass:"aaaaaaaaa"},
+			dataType: "json",         
+             success: function (result) {  
+                 //var docs=;
+				//var htmlStr="编号: "+result.id;
+				//htmlStr=htmlStr+"姓名："+result.u_name
+				//htmlStr=htmlStr+"密码："+result.u_password
+				
+				var htmlStr="<table border=\"1\"><tr><td>编号</td><td>姓名：</td><td>密码：</td><tr>";
+				htmlStr+="<tr><td>"+result.id +"</td><td>"+result.u_name+"</td><td>"+result.u_password+"</td><tr></table>";
+				
+				initHtml(htmlStr);
+
+             }  
+         });  
+}
+    function get(){
+       $.get(url,function(data,status){
+		//alert(data);
+		/**
+		json序列化  可以将一个json对象转换成json字符串
+		提交json数据时使用
+		*/
+		//var json= JSON.stringify(data); 
+		//alert(json);
+		
+		/**
+		json反序列化  可以将json字符串转换成一个json对象
+		需要取值使用
+		*/
+		var parse=JSON.parse(data);
+		//alert(parse.id);
+		
+		 // 
+	   //var json2=JSON.parse(data);
+		//var obj=JSON.parse(json);
+	   //var readyState=obj.toJSONString();
+	   //alert(obj.id);
+	   //alert(json2)
+	  // alert(json2.readyState)
+	  // alert(readyState);
+var docs=document.getElementById("msg2").innerHTML="反序列化："+"编号: "+parse.id
+	  +"反序列化："+"姓名："+parse.u_name
+	  +"反序列化："+"密码："+parse.u_password;
+	   });
+	 	   
+	 
+	  
+    }
+</script>
+
+
+
+<script>
+
+
+
+var urls="http://localhost:8080/MobileServce/login";
+function timedGetText( url){
+    var request = new XMLHttpRequest();
+    var timeout = false;
+    var timer = setTimeout( function(){
+        timeout = true;
+        request.abort();
+    }, time );
+    request.open( "GET", url );
+    request.onreadystatechange = function(){
+        if( request.readyState !== 4 ) return;
+        if( timeout ) return;
+        clearTimeout( timer );
+        if( request.status === 200 ){
+            //callback( request.responseText );
+			alert(request.responseText );
+			return request.responseText ;
+        }
+    }
+    request.send( null );
+}
+</script>
