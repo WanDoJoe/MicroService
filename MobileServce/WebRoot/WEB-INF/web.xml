@@ -73,7 +73,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-		<!-- spring mvc 解决办法  -->
+		<!-- spring mvc 解决办法   -->
 	<filter>
 		<filter-name>cors</filter-name>
 		<filter-class>com.seventythree.utils.CORSFilter</filter-class>
