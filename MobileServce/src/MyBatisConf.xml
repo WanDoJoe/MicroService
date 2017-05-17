@@ -7,10 +7,11 @@
       <!-- <typeAlias alias="User" type="com.ssm.model.User"/>
       <typeAlias alias="UserInfo" type="com.ssm.model.UserInfo"/> -->
       <typeAlias alias="InfoModel" type="com.seventythree.model.InfoModel"/>
+      <typeAlias alias="UserModel" type="com.seventythree.model.UserModel"/>
    </typeAliases>  
    <!-- 配置Mapper文件的路径 -->
    <mappers>
-       <!-- <mapper resource="mapper/UserMapper.xml"/> -->
-       <mapper resource="mapper/InfoMapper.xml"/>
+    	<mapper resource="mapper/InfoMapper.xml"/>
+       <mapper resource="mapper/UserMapper.xml"/>
    </mappers>
 </configuration>

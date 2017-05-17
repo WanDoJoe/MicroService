@@ -6,33 +6,9 @@ import com.seventythree.model.UserModel;
 
 
 public interface UserMapper {
-//	/**
-//	 * �����û�������������û�
-//	 * @param userName
-//	 * @param password
-//	 * @return
-//	 */
-//	public UserModel selectByNameAdnPwd(String userName,String password);
-//	/**
-//	 * ����id�����û�
-//	 * @param id
-//	 * @return
-//	 */
+	public UserModel selectByNameAndPwd(String u_name,String u_password);
 //	public UserModel selectById(int id);
-//
-//	/**
-//	 * �����û���Ϣ
-//	 * @param u
-//	 */
-//	public void updateUserModel(UserModel u);
-//	/**
-//	 * ����һ���û�
-//	 * @param u
-//	 */
-//	public void insertUserModel(UserModel u);
-//	/**
-//	 * ɾ��һ���û�
-//	 * @param u
-//	 */
+	public void updateUserModel(UserModel u);
+	public void insertUserModel(UserModel u);
 //	public void deleteUserModel(UserModel u);
 }

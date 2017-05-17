@@ -27,12 +27,16 @@
    <mvc:resources location="/img/" mapping="/img/**"/>  
     <mvc:resources location="/js/" mapping="/js/**"/>  
 
+	<!-- 支持文件上传 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
         <property name="defaultEncoding" value="utf-8"></property>   
         <property name="maxUploadSize" value="10485760000"></property>  
         <property name="maxInMemorySize" value="40960"></property>  
    </bean>  
-
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->  
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" lazy-init="false" />  
+	<!-- 另外最好还要加入DefaultAnnotationHandlerMapping，不然会被 XML或其它的映射覆盖！ -->  
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />  
 
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<!--<bean

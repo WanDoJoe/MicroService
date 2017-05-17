@@ -37,6 +37,11 @@
        <property name="mapperInterface" value="com.seventythree.mapper.InfoMapper" /> <!-- name不用变  -->
        <property name="sqlSessionFactory" ref="sqlSessionFactory" />  
     </bean>
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">  
+       <property name="mapperInterface" value="com.seventythree.mapper.UserMapper" /> <!-- name不用变  -->
+       <property name="sqlSessionFactory" ref="sqlSessionFactory" />  
+       
+    </bean>
      <!--<bean id="bookMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">  
        <property name="mapperInterface" value="com.ssm.mapper.BookMapper" />
        <property name="sqlSessionFactory" ref="sqlSessionFactory" />  

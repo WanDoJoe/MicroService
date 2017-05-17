@@ -18,13 +18,48 @@
     </insert>
      -->
     
-    <!-- <select id="selectByNameAdnPwd" parameterType="com.seventythree.model.UserModel" resultType="com.seventythree.model.UserModel">
-    	SELECT * FROM t_user u WHERE u.username=#{userName} AND u.password=#{password}
+    <select id="selectByNameAndPwd" resultType="com.seventythree.model.UserModel">
+    <!-- 多参数查询 需要用标记位来设置查询条件 -->
+    	SELECT * FROM t_user u WHERE u.u_name=#{0} AND u.u_password=#{1}
     </select>
     
     <insert id="insertUserModel" parameterType="com.seventythree.model.UserModel" flushCache="true">
-    	INSERT INTO t_user(u_name,u_password,othername,date,selfintroduction,icon) VALUES (#{u_name},
-    	#{u_password},#{othername},#{date},#{selfintroduction},#{icon})
-    </insert> -->
+    INSERT INTO t_user (
+    	 u_name,
+    	 u_password,
+    	 othername,
+    	 date,
+    	 selfintroduction,
+    	 icon,
+    	 birthday,
+    	 gender,
+    	 phone,
+    	 address)
+			 VALUES  (#{u_name},
+    	 #{u_password},
+    	 #{othername},
+    	 #{date},
+    	 #{selfintroduction},
+    	 #{icon},
+    	 #{birthday},
+    	 #{gender},
+    	 #{phone},
+    	 #{address}) ON DUPLICATE KEY UPDATE u_name = #{u_name} 
+    </insert> 
+    <update id="updateUserModel" parameterType="com.seventythree.model.UserModel">
+		UPDATE t_user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="u_name!=null">u_name=#{u_name},</if>
+			<if test="u_password!=null">u_password=#{u_password},</if>
+			<if test="othername!=null">othername=#{othername},</if>
+			<if test="date!=null">date=#{date},</if>
+			<if test="selfintroduction!=null">selfintroduction=#{selfintroduction},</if>
+			<if test="icon!=null">icon=#{icon},</if>
+			<if test="birthday!=null">birthday=#{birthday},</if>
+			<if test="phone!=null">phone=#{phone},</if>
+			<if test="address!=null">address=#{address},</if>
+		</trim>
+		WHERE id=#{id}
+    </update>
    
 </mapper>

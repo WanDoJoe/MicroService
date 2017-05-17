@@ -24,7 +24,39 @@
     </select>
     
     <insert id="insertInfoModel" parameterType="com.seventythree.model.InfoModel" flushCache="true">
-    	INSERT INTO info (name) VALUES (#{name})
+    	<!--  INSERT INTO info (name,title,author,date,content,images) VALUES (#{name},#{title},#{author}
+    	,#{date},#{content},#{images}) -->
+    	
+    	<!--  insert into info (name,title,author,date,content,images)
+    	VALUES (#{name},#{title},#{author},#{date},#{content},#{images})
+		select * from DUAL where not  exists (
+			select *  from info where name = #{name})  -->
+			
+			<!-- 需要在表内设置索引 索引类型为Unique 索引方法为BTREE  如果name存在不插入 不纯在则插入-->
+			INSERT INTO info (name,title,author,date,content,images)
+			 VALUES (#{name},#{title},#{author},#{date},#{content},#{images}) ON DUPLICATE KEY UPDATE name = #{name} 
+			
+	 	
+	 	<!-- INSERT INTO info (name,title,author,date,content,images) VALUES (#{name},#{title},#{author}
+    	,#{date},#{content},#{images}) ON DUPLICATE KEY UPDATE name=#{name}    -->
     </insert>
+
+
+	<!-- 因为不更新的字段，会被传递null到SQL中，引起异常。 这时就需要进行动态SQL拼接，如下，使用trim就是为了删掉最后字段的“,”。 
+		主要不用单独写SET了，因为set被包含在trim中了： -->
+    <update id="updateInfoModel" parameterType="com.seventythree.model.InfoModel" >
+	UPDATE info
+	<trim prefix="set" suffixOverrides=",">
+		<if test="name!=null">name=#{name},</if>
+		<if test="title!=null">title=#{title},</if>
+		<if test="author!=null">author=#{author},</if>
+		<if test="date!=null">date=#{date},</if>
+		<if test="content!=null">content=#{content},</if>
+		<if test="images!=null">images=#{images},</if>
+	</trim>
+	WHERE name=#{name} and id=#{id}
+
+    	
+    </update>
    
 </mapper>

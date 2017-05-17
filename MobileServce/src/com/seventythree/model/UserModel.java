@@ -5,8 +5,8 @@ public class UserModel {
 	int id;
 	String u_name;
 	String u_password;
-	String ohtername;
-	String data;
+	String othername;
+	String date;
 	String selfintroduction;
 	String icon;
 	String birthday;
@@ -14,6 +14,27 @@ public class UserModel {
 	String phone;
 	String address;
 	
+	@Override
+	public String toString() {
+		return "UserModel [id="+id+"u_name=" + u_name + ", u_password=" + u_password + ", othername=" + othername + ", date="
+				+ date + ", selfintroduction=" + selfintroduction + ", icon=" + icon + ", birthday=" + birthday
+				+ ", gender=" + gender + ", phone=" + phone + ", address=" + address + "]";
+	}
+	
+	public String getOthername() {
+		return othername;
+	}
+
+	public void setOthername(String othername) {
+		this.othername = othername;
+	}
+
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getId() {
 		return id;
 	}
@@ -23,12 +44,7 @@ public class UserModel {
 	public String getU_password() {
 		return u_password;
 	}
-	public String getOhtername() {
-		return ohtername;
-	}
-	public String getData() {
-		return data;
-	}
+	
 	public String getSelfintroduction() {
 		return selfintroduction;
 	}
@@ -56,12 +72,7 @@ public class UserModel {
 	public void setU_password(String u_password) {
 		this.u_password = u_password;
 	}
-	public void setOhtername(String ohtername) {
-		this.ohtername = ohtername;
-	}
-	public void setData(String data) {
-		this.data = data;
-	}
+	
 	public void setSelfintroduction(String selfintroduction) {
 		this.selfintroduction = selfintroduction;
 	}

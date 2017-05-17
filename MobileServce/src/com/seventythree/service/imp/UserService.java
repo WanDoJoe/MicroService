@@ -2,28 +2,34 @@ package com.seventythree.service.imp;
 
 import java.util.List;
 
-import com.seventythree.model.UserModel;
-import com.seventythree.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class UserService{}
-//implements BaseService<UserModel> {
-//
-//	@Override
-//	public boolean insert(UserModel u) {
-//		
-//		return false;
-//	}
-//
-//	@Override
-//	public UserModel selectT(List<String> l) {
-//		
-//		return null;
-//	}
-//
-//	@Override
-//	public List<UserModel> selectTs(List<String> l) {
-//		
-//		return null;
-//	}
-//
-//}
+import com.seventythree.dao.UserDao;
+import com.seventythree.model.UserModel;
+
+
+@Service
+public class UserService  {
+	@Autowired
+	UserDao dao;
+	
+	public boolean insert(UserModel u) {
+		System.out.println(u.toString());
+		return 	dao.insertUserModel(u);
+	}
+	public boolean update(UserModel u) {
+		return dao.updateUserModel(u);
+	}
+	
+
+	public UserModel selectT(String usernme,String password) {
+		return dao.selectByNameAdnPwd(usernme, password);
+	}
+
+	public List<UserModel> selectTs(List<String> l) {
+		
+		return null;
+	}
+
+}
