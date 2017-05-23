@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta charset="utf-8" />
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
-header("Access-Control-Allow-Origin:*")
+<!-- header("Access-Control-Allow-Origin:*") -->
 
-<title>JS简单模拟HTTP请求 - 琼台博客</title>
+<title>http qinqiu</title>
 <script type="text/javascript" src="jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="json2.js"></script>
 
@@ -26,28 +26,36 @@ var html=document.getElementById("msg2").innerHTML=htmlStr;
 //alert(html);
 }
 
-var url='http://192.168.199.151:8080/MobileServce/login';
+var url='http://192.168.199.146:8080/MobileServce/';
+var method="finduserpage";
+var startint=-19;
+var countint=20;
 function post(){
 	//$.post(url,function(data,status){
 	//	alert(data);
 	
 	//});
+	startint+=countint;
+	// alert(startint);
 	$.ajax({  
              type: "post",  
-             url: url,  
+             url: url+method,  
              cache: false,  
              error: function () { },  
-            data:{pass:"aaaaaaaaa"},
-			dataType: "json",         
+             data:{start:startint,count:countint},//start=500&count=10
+			 dataType: "json",         
              success: function (result) {  
                  //var docs=;
 				//var htmlStr="编号: "+result.id;
 				//htmlStr=htmlStr+"姓名："+result.u_name
 				//htmlStr=htmlStr+"密码："+result.u_password
-				
+				// alert(result.data.list.length);
 				var htmlStr="<table border=\"1\"><tr><td>编号</td><td>姓名：</td><td>密码：</td><tr>";
-				htmlStr+="<tr><td>"+result.id +"</td><td>"+result.u_name+"</td><td>"+result.u_password+"</td><tr></table>";
+				for (var i = 0; i < result.data.list.length; i++) {
+					htmlStr+="<tr><td>"+result.data.list[i].id +"</td><td>"+result.data.list[i].u_name+"</td><td>"+result.data.list[i].u_password+"</td><tr>";
+				}
 				
+				htmlStr+="</table>";
 				initHtml(htmlStr);
 
              }  
