@@ -7,6 +7,7 @@ import com.seventythree.model.UserModel;
 
 public interface UserMapper {
 	public UserModel selectByNameAndPwd(String u_name,String u_password);
+	public List<UserModel> selectListUser(int start,int count);
 //	public UserModel selectById(int id);
 	public void updateUserModel(UserModel u);
 	public void insertUserModel(UserModel u);

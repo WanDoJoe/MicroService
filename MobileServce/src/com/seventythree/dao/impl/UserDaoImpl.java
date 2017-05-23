@@ -62,6 +62,11 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
+	@Override
+	public List<UserModel> selectListUser(int start, int count) {
+		return userMapper.selectListUser(start, count);
+	}
+
 //	@Override
 //	public void deleteUserModel(UserModel u) {
 ////		userMapper.deleteUserModel(u);

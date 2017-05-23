@@ -11,11 +11,14 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Controller
 public class BaseController {
 	private static Map<String ,JSONObject> returnJsonParamsObjectMap;
 	private static Gson gson=null;
+	private static String Content_type_html="text/html;charset=UTF-8";
+	private static String Content_type_json="text/json;charset=UTF-8";
 	
 	public static Gson returnGson(){
 //		synchronized (BaseController.class) {
@@ -32,30 +35,74 @@ public class BaseController {
 	 * @param response
 	 * @param str
 	 */
+	protected void outStr(HttpServletResponse response, String str,String message,String resule) {
+		try {
+			response.setHeader("Content-type", Content_type_json);
+			response.setCharacterEncoding("UTF-8");
+			JSONObject data=new JSONObject();
+			data.put("data", str);
+			data.put("message",message);
+			data.put("resule", resule);
+			response.getWriter().write(data.toString());
+		} catch (Exception e) {
+		}
+	}
+	protected void outStr(HttpServletResponse response, JSONObject str,String message,String resule) {
+		try {
+//			Type type = new TypeToken<TestGeneric<String>>(){}.getType();
+			response.setHeader("Content-type",Content_type_json);
+			response.setCharacterEncoding("UTF-8");
+			JSONObject data=new JSONObject();
+			System.out.println(str.toString());
+			data.put("data",str);// returnGson().toJson(str, Object.class));
+			data.put("message",message);
+			data.put("resule", resule);
+			response.getWriter().write(data.toString());
+		} catch (Exception e) {
+		}
+	}
 	protected void outStr(HttpServletResponse response, String str) {
 		try {
 			response.setCharacterEncoding("UTF-8");
+			JSONObject data=new JSONObject();
+			data.put("data", str);
 			response.getWriter().write(str);
 		} catch (Exception e) {
 		}
 	}
 	
+	/**
+	 * 获取前台传过来的参数
+	 * @param request
+	 * @param params
+	 * @return JSONObject
+	 */
 	public static JSONObject getRequestParams(HttpServletRequest request,String params){
 		return requestJsonUtil(request.getParameter(params));
 	}
-	
+	/**
+	 *  获取前台传过来的参数
+	 * @param request
+	 * @param params
+	 * @return Map<String,JSONObject> 
+	 */
 	public static Map<String,JSONObject> getRequestParamsReturnMap(HttpServletRequest request,String params){
 		requestJsonUtil(request.getParameter(params));
 		return returnJsonParamsObject();
 	}
 	/**
-	 * 处理返回参数json
+	 * 解析前台参数并处理以json形式返回参数的value
 	 */
 	public static JSONObject requestJsonUtil(String params) {
 		try{
+			System.out.println("requestJsonUtil params"+params);
 		JSONObject paramsJson=new JSONObject(params);
 		JSONObject dataJson=paramsJson.getJSONObject("params");
 		JSONObject sysinfo=paramsJson.getJSONObject("sysinfo");
+		System.out.println("dataJson params"+dataJson.toString());
+		System.out.println("sysinfo "+sysinfo.toString());
+		
+		
 		returnJsonParamsObjectMap=new HashMap<String, JSONObject>();
 		returnJsonParamsObjectMap.put("dataparams", dataJson);
 		returnJsonParamsObjectMap.put("systparams", sysinfo);

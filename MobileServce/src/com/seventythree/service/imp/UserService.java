@@ -31,5 +31,11 @@ public class UserService  {
 		
 		return null;
 	}
+	
+	public List<UserModel> selectPage(int start ,int count){
+		
+		return dao.selectListUser(start, count);
+		
+	}
 
 }

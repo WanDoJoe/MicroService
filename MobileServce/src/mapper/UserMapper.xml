@@ -2,28 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seventythree.mapper.UserMapper">	
-	<!--  查询单条记录  -->  
-    <!-- <select id="selectUserById" parameterType="int" resultType="User">  
-        select * from user where id = #{id}  
+    
+     <!--  -->
+	
+	<!--  u_name,
+    	 u_password,
+    	 othername,
+    	 date,
+    	 selfintroduction,
+    	 icon,
+    	 birthday,
+    	 gender,
+    	 phone,
+    	 address -->
+    <!--配置一个resultMap 指定返回的类型 -->
+    <resultMap id="selectListUsertMent" type="com.seventythree.model.UserModel">
+        <id column="id" property="id" />
+        <result column="u_name" property="u_name" />
+        <result column="u_password" property="u_password" />
+        <result column="date" property="date" />
+        <result column="selfintroduction" property="selfintroduction" />
+        <result column="icon" property="icon" />
+        <result column="birthday" property="birthday" />
+        <result column="gender" property="gender" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+    </resultMap>
+     
+    <select id="selectListUser" resultMap="selectListUsertMent">
+    <!-- 分页查询    LIMIT 100, 10     100表示第100条开始  10表示功能查询10条    
+    	 SELECT SQL_CALC_FOUND_ROWS * FROM table WHERE b = 1 LIMIT 100, 10
+       -->
+   		SELECT SQL_CALC_FOUND_ROWS * FROM t_user LIMIT #{0}, #{1};
     </select>
+ 
     
-     <select id="findByAll" resultType="com.ssm.model.User">
-    	select * from user_login
-    </select>
-    
-    <insert id="insertT"
-    parameterType="com.ssm.model.User" 
- 	flushCache="true">
-    	 INSERT INTO user_login (id,username,password,date) VALUES (#{id},#{username},#{password},#{date})
-    </insert>
-     -->
-    
+    <!--  -->
     <select id="selectByNameAndPwd" resultType="com.seventythree.model.UserModel">
     <!-- 多参数查询 需要用标记位来设置查询条件 -->
     	SELECT * FROM t_user u WHERE u.u_name=#{0} AND u.u_password=#{1}
     </select>
-    
+    <!--  -->
+    <insert id="onlyInsertUserModel" parameterType="com.seventythree.model.UserModel" flushCache="true">
+    	INSERT INTO t_user(
+    	 u_name,
+    	 u_password,
+    	 othername,
+    	 date,
+    	 selfintroduction,
+    	 icon,
+    	 birthday,
+    	 gender,
+    	 phone,
+    	 address)
+			 VALUES  
+		 (#{u_name},
+    	 #{u_password},
+    	 #{othername},
+    	 #{date},
+    	 #{selfintroduction},
+    	 #{icon},
+    	 #{birthday},
+    	 #{gender},
+    	 #{phone},
+    	 #{address});
+    </insert>
     <insert id="insertUserModel" parameterType="com.seventythree.model.UserModel" flushCache="true">
+    <!-- 如果存在则更新，不存在则插入 -->
+   <!--  INSERT INTO t_user(u_name,u_password) value('admin','admin') ON DUPLICATE KEY UPDATE u_password='admin12'; -->
     INSERT INTO t_user (
     	 u_name,
     	 u_password,
@@ -35,7 +81,8 @@
     	 gender,
     	 phone,
     	 address)
-			 VALUES  (#{u_name},
+			 VALUES  
+		 (#{u_name},
     	 #{u_password},
     	 #{othername},
     	 #{date},
@@ -44,7 +91,19 @@
     	 #{birthday},
     	 #{gender},
     	 #{phone},
-    	 #{address}) ON DUPLICATE KEY UPDATE u_name = #{u_name} 
+    	 #{address})
+    	 
+    	<!--  ON DUPLICATE KEY UPDATE
+    	
+    	 u_password = #{u_password},
+    	 othername=#{othername},
+    	 date=#{date},
+    	 selfintroduction=#{selfintroduction},
+    	 icon=#{icon},
+    	 birthday=#{birthday},
+    	 gender=#{gender},
+    	 phone=#{phone},
+    	 address=#{address}; -->
     </insert> 
     <update id="updateUserModel" parameterType="com.seventythree.model.UserModel">
 		UPDATE t_user
